@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Itinerary Planner</title>
+</head>
+<body>
+    <h1>Travel Itinerary Planner</h1>
+
+    <h2>Add Activity</h2>
+
+    <form action="/add" method="POST">
+        <label>Destination:</label>
+        <input type="text" name="destination" required>
+        <br><br>
+
+        <label>Day:</label>
+        <input type="text" name="day" placeholder="Day 1" required>
+        <br><br>
+
+        <label>Activity:</label>
+        <input type="text" name="activity" required>
+        <br><br>
+
+        <label>Notes:</label>
+        <input type="text" name="notes">
+        <br><br>
+
+        <button type="submit">Add Activity</button>
+    </form>
+
+    <h2>My Itinerary</h2>
+
+    {% if itineraries %}
+        {% for item in itineraries %}
+            <div>
+                <h3>{{ item.destination }} - {{ item.day }}</h3>
+                <p><strong>Activity:</strong> {{ item.activity }}</p>
+                <p><strong>Notes:</strong> {{ item.notes }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No itinerary activities added yet.</p>
+    {% endif %}
+
+    <footer>
+        <p>Commit: {{ commit_id }}</p>
+    </footer>
+</body>
+</html>
