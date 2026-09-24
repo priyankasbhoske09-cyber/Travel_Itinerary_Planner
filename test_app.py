@@ -43,4 +43,3 @@ def test_invalid_itinerary(client):
     )
 
     assert response.status_code == 400
-    
