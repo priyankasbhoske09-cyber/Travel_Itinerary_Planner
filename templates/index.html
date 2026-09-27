@@ -1,52 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Itinerary Planner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dff6ff, #f8fbff);
+            color: #263238;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            color: white;
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 17px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #0077b6;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccd6dd;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0077b6;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .btn-add {
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #0077b6;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-add:hover {
+            background: #005f8f;
+        }
+
+        .btn-update {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #0288d1;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-update:hover {
+            background: #01579b;
+        }
+
+        .btn-delete {
+            background: #e53935;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-delete:hover {
+            background: #c62828;
+        }
+
+        .itinerary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .itinerary {
+            background: #f7fcff;
+            border-left: 5px solid #00b4d8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+
+        .itinerary h3 {
+            margin: 0;
+            color: #0077b6;
+        }
+
+        .itinerary p {
+            margin: 8px 0;
+        }
+
+        details {
+            margin-top: 15px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            header h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Travel Itinerary Planner</h1>
 
-    <h2>Add Activity</h2>
+<header>
+    <h1>✈️ Travel Itinerary Planner</h1>
+    <p>Plan your journey, organize your activities and enjoy your trip.</p>
+</header>
 
-    <form action="/add" method="POST">
-        <label>Destination:</label>
-        <input type="text" name="destination" required>
-        <br><br>
+<div class="container">
 
-        <label>Day:</label>
-        <input type="text" name="day" placeholder="Day 1" required>
-        <br><br>
-
-        <label>Activity:</label>
-        <input type="text" name="activity" required>
-        <br><br>
-
-        <label>Notes:</label>
-        <input type="text" name="notes">
-        <br><br>
-
-        <button type="submit">Add Activity</button>
-    </form>
-
-    <h2>My Itinerary</h2>
-
-    {% if itineraries %}
-        {% for item in itineraries %}
-            <div>
-                <h3>{{ item.destination }} - {{ item.day }}</h3>
-                <p><strong>Activity:</strong> {{ item.activity }}</p>
-                <p><strong>Notes:</strong> {{ item.notes }}</p>
+    <!-- ADD ACTIVITY -->
+    <div class="card">
+        <h2>➕ Add New Activity</h2>
+        <form action="/add" method="POST">
+            <div class="form-grid">
+                <input type="text" name="destination" placeholder="Destination" required>
+                <input type="text" name="day" placeholder="Day 1" required>
+                <input class="full" type="text" name="activity" placeholder="Activity" required>
+                <input class="full" type="text" name="notes" placeholder="Notes (optional)">
             </div>
-            <hr>
-        {% endfor %}
-    {% else %}
-        <p>No itinerary activities added yet.</p>
-    {% endif %}
+            <button class="btn-add" type="submit">➕ Add Activity</button>
+        </form>
+    </div>
 
-    <footer>
-        <p>Commit: {{ commit_id }}</p>
-    </footer>
+    <!-- MY ITINERARY LIST -->
+    <div class="card">
+        <h2>🗺️ My Itinerary</h2>
+
+        {% if itineraries %}
+            {% for item in itineraries %}
+                <div class="itinerary">
+                    <div class="itinerary-header">
+                        <h3>📍 {{ item.destination }} — {{ item.day }}</h3>
+                        <form action="/delete/{{ item.id }}" method="POST" style="margin: 0;">
+                            <button type="submit" class="btn-delete">🗑️ Delete</button>
+                        </form>
+                    </div>
+
+                    <p><strong>🎯 Activity:</strong> {{ item.activity }}</p>
+                    <p><strong>📝 Notes:</strong> {{ item.notes if item.notes else "No notes added." }}</p>
+
+                    <!-- EDIT SECTION -->
+                    <details>
+                        <summary>✏️ Edit Activity</summary>
+                        <form action="/update/{{ item.id }}" method="POST" style="margin-top: 15px;">
+                            <div class="form-grid">
+                                <input type="text" name="destination" value="{{ item.destination }}" required>
+                                <input type="text" name="day" value="{{ item.day }}" required>
+                                <input class="full" type="text" name="activity" value="{{ item.activity }}" required>
+                                <input class="full" type="text" name="notes" value="{{ item.notes }}">
+                            </div>
+                            <button class="btn-update" type="submit">💾 Save Changes</button>
+                        </form>
+                    </details>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center; color: #777;">No activities added yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+<footer>
+    Travel Itinerary Planner <br>
+    Commit: {{ commit_id }}
+</footer>
+
 </body>
+
 </html>
